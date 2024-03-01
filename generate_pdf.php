@@ -26,25 +26,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pdf->SetFont('Arial', 'B', 16);
     $pdf->SetTextColor(0);
 
+    // Header Section
     $pdf->MultiCell(100, 10, 'Firm: ' . $firm, 0, 'L');
-    $pdf->SetY(10); // Reset Y position for the next column
-    $pdf->SetX(150); // Move to the right for the second column
+    $pdf->SetY(10);
+    $pdf->SetX(150);
     $pdf->MultiCell(0, 10, 'Purchase Order', 0, 'L');
-
-    $pdf->SetX(150); // Move to the right for the second column
+    $pdf->SetX(150);
     $pdf->Cell(0, 10, 'Date: ' . date('Y-m-d'), 0, 1);
-    // Vendor Information
-    $pdf->Ln(10);
 
-    // Highlighted Vendor Information
+    // Vendor Information Section
+    $pdf->Ln(10);
     $pdf->SetFont('Arial', 'B', 12);
     $pdf->Cell(0, 10, 'Vendor Information', '0', 1);
     $pdf->SetFont('Arial', '', 12);
     $pdf->Cell(0, 10, 'Vendor Name: ' . $vendorName, 0, 1);
     $pdf->Cell(0, 10, 'Vendor Mobile: ' . $vendorMobile, 0, 1);
 
-    // Ship To Information
-    
+    // Ship To Information Section
     $pdf->SetY(40);
     $pdf->SetX(120);
     $pdf->SetFont('Arial', 'B', 12);
@@ -54,31 +52,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pdf->SetX(120); 
     $pdf->Cell(120, 10, '' . $vendorAddress, 0, 1);
     $pdf->Ln(10);
-    // Date on top right
-    // Table with 4 columns
-    $pdf->SetFont('Arial', 'B', 12);
 
-    // Column names
+    // Table Section
+    $pdf->SetFont('Arial', 'B', 12);
     $pdf->Cell(40, 10, 'Requisitioner', 1, 0, 'C');
     $pdf->Cell(40, 10, 'Ship Via', 1, 0, 'C');
     $pdf->Cell(40, 10, 'F.O.B', 1, 0, 'C');
     $pdf->Cell(40, 10, 'Shipping Terms', 1, 1, 'C');
-
     $pdf->SetFont('Arial', '', 12);
-
-    // Add values for each column (replace with actual data)
     $pdf->Cell(40, 10, '', 1);
     $pdf->Cell(40, 10, '', 1);
     $pdf->Cell(40, 10, '', 1);
     $pdf->Cell(40, 10, '', 1, 1);
 
-    // Product Details
+    // Product Details Section
     $pdf->Ln(10);
     $pdf->SetFont('Arial', 'B', 12);
-
     $pdf->SetFont('Arial', '', 12);
-
-    // Display Table headings
     $pdf->Cell(80, 9, "Product", 1, 0);
     $pdf->Cell(40, 9, "PRICE", 1, 0, "C");
     $pdf->Cell(30, 9, "QTY", 1, 0, "C");
@@ -101,20 +91,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $pdf->Cell(40, 9, "", 1, 1, "R");
     }
 
-    // Bank Details and Additional Instructions within a box
+    // Bank Details and Additional Instructions Section
     $pdf->Ln(10);
-    $pdf->Rect(10, $pdf->GetY(), 120, 40); // Draw a rectangle
-
+    $pdf->Rect(10, $pdf->GetY(), 120, 40);
     $pdf->Cell(0, 10, 'Bank Details', '0', 1);
     $pdf->Cell(0, 5, 'Bank Name: ' . $bankName, 0, 1);
     $pdf->Cell(0, 5, 'Branch: ' . $branch, 0, 1);
     $pdf->Cell(0, 5, 'Account No: ' . $accountNo, 0, 1);
     $pdf->Cell(0, 5, 'IFSC Code: ' . $ifscCode, 0, 1);
 
-    // Grand Total
+    // Grand Total Section
     $pdf->Ln(-30);
-    
-    $pdf->Cell(0, 10, 'Grand Total: ' . $grandTotal, 0, 1, 'R'); // Align to the right
+    $pdf->Cell(0, 10, 'Grand Total: ' . $grandTotal, 0, 1, 'R');
 
     // Save or output the PDF
     $pdf->Output('invoice.pdf', 'D');
